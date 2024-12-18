@@ -1,5 +1,6 @@
 package com.mslc;
 
+
 public class Cliente {
     
     public static final int MAX_EDAD = 99;
@@ -19,7 +20,7 @@ public class Cliente {
         } catch (IllegalArgumentException e) {
             System.err.println("Error al establecer un valor: " + e.getMessage());
         } catch (Exception e) {
-            System.err.println("Ocurri� un error inesperado: " + e.getMessage());
+            System.err.println("Ocurrió un error inesperado: " + e.getMessage());
         }
     }
 
@@ -44,7 +45,7 @@ public class Cliente {
         if (edad > 0 && edad <= MAX_EDAD) {
             this.edad = edad;
         } else {
-            throw new IllegalArgumentException("La edad debe ser un n�mero positivo mayor que cero y menor o igual a " + MAX_EDAD + ".");
+            throw new IllegalArgumentException("La edad debe ser un número positivo mayor que cero y menor o igual a " + MAX_EDAD + ".");
         }
     }
 
