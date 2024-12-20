@@ -2,11 +2,14 @@ package com.mslc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
+
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestRecomendarProducto {
+public class TestRecomendarProducto {	
 	
 	// Clientes con los valores de prueba de la decisión 1
 	private Cliente c1Decision1;
@@ -55,10 +58,10 @@ public class TestRecomendarProducto {
 		c4Decision1 = new Cliente(15, true, true, true);
 		
 		//Decision 2
-		c1Decision2 = new Cliente(28, false, false, true);
+		c1Decision2 = new Cliente(28, false, false, false);
 		c2Decision2 = new Cliente(21, false, true, true);
 		c3Decision2 = new Cliente(15, true, true, true);
-		c4Decision2 = new Cliente(21, true, false, true);
+		c4Decision2 = new Cliente(21, true, false, false);
 		
 		//Decision 3
 		c1Decision3 = new Cliente(34, false, true, true);
@@ -70,7 +73,7 @@ public class TestRecomendarProducto {
 		c1Decision4 = new Cliente(34, false, true, false);
 		c2Decision4 = new Cliente(21, false, true, false);
 		c3Decision4 = new Cliente(21, true, true, true);
-		c4Decision4 = new Cliente(21, true, false, true);
+		c4Decision4 = new Cliente(21, false, false, true);
 		
 		//Decision 5
         c1Decision5 = new Cliente(15, false, true, false);
@@ -140,5 +143,73 @@ public class TestRecomendarProducto {
 	public void testDeterminarProductoClienteInvalido() {
 		assertEquals(RecomendarProducto.determinarProducto(clienteInvalido), "No se encontró un producto adecuado");
 	}
+	
+    @Test
+    public void testLeerBooleanoValidoYes() {
+        boolean result = RecomendarProducto.leerBooleano("yes");
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void testLeerBooleanoValidoNo() {
+        boolean result = RecomendarProducto.leerBooleano("no");
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void testLeerBooleanoInvalido() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            RecomendarProducto.leerBooleano("maybe");
+        });
+        assertEquals("Entrada inválida. Debes ingresar 'yes' o 'no'.", exception.getMessage());
+    }
+
+    @Test
+    public void testLeerBooleanoCaseInsensitiveYes() {
+        boolean result = RecomendarProducto.leerBooleano("YES");
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void testLeerBooleanoCaseInsensitiveNo() {
+        boolean result = RecomendarProducto.leerBooleano("No");
+        assertEquals(false, result);
+    }
+    
+    @Test
+    public void testCapturarDatosClienteValido() {
+        String input = "25\nyes\nno\nyes\n";
+        Scanner scanner = new Scanner(input);
+        Cliente cliente = RecomendarProducto.capturarDatosCliente(scanner);
+
+        assertEquals(25, cliente.getEdad());
+        assertEquals(true, cliente.getEstudiando());
+        assertEquals(false, cliente.getVive_con_padres());
+        assertEquals(true, cliente.getTrabaja());
+    }
+
+    @Test
+    public void testCapturarDatosClienteEntradaInvalidaBooleano() {
+        String input = "25\nmaybe\nyes\nno\n";
+        Scanner scanner = new Scanner(input);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            RecomendarProducto.capturarDatosCliente(scanner);
+        });
+        assertEquals("Entrada inválida. Debes ingresar 'yes' o 'no'.", exception.getMessage());
+    }
+
+    @Test
+    public void testCapturarDatosClienteSecuenciaCompleta() {
+        String input = "18\nyes\nno\nno\n";
+        Scanner scanner = new Scanner(input);
+        Cliente cliente = RecomendarProducto.capturarDatosCliente(scanner);
+
+        assertEquals(18, cliente.getEdad());
+        assertEquals(true, cliente.getEstudiando());
+        assertEquals(false, cliente.getVive_con_padres());
+        assertEquals(false, cliente.getTrabaja());
+    }
+
 }
 

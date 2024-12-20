@@ -41,11 +41,11 @@ public class RecomendarProducto {
 
         if (edad < 18 && estudiando && viveConPadres) {
             return "Cuenta Confort";
-        } else if (edad < 25 && estudiando && !viveConPadres) {
+        } else if (edad < 25 && estudiando && !viveConPadres && !trabaja) {
             return "Cuenta Vamos que tú puedes";
         } else if (edad >= 18 && edad <= 25 && trabaja && viveConPadres) {
             return "Cuenta Ahorra ahora que puedes";
-        } else if (edad >= 18 && edad <= 25 && trabaja && !viveConPadres) {
+        } else if (edad >= 18 && edad <= 25 && trabaja && !viveConPadres && !estudiando) {
             return "Cuenta Saltando del Nido";
         } else if (edad > 25 && trabaja && viveConPadres) {
             return "Cuenta Independízate que va siendo hora";
